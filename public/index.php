@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 require dirname(__DIR__).'/vendor/autoload.php';
 
+deleteCache('../var/cache');// pour effacer continuellempent le cache
+
 (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
 
 if ($_SERVER['APP_DEBUG']) {
@@ -28,3 +30,18 @@ $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);
+
+function deleteCache($dirPath) {
+    // dump($dirPath);
+    if (!is_dir($dirPath))
+        return;
+    if (substr($dirPath, strlen($dirPath) - 1, 1) != '/')
+        $dirPath .= '/';
+    $files = glob($dirPath . '*', GLOB_MARK);
+    foreach ($files as $file)
+        if (is_dir($file))
+            deleteCache($file);
+        else
+            unlink($file);
+    rmdir($dirPath);
+}
