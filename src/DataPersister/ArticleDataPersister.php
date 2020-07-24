@@ -1,7 +1,5 @@
 <?php
 
-// src/DataPersister
-
 namespace App\DataPersister;
 
 use App\Entity\Tag;
