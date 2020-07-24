@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\ArticleRepository;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 
 
 
@@ -87,6 +88,8 @@ class Article
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="article", orphanRemoval=true)
+     * 
+     * @ApiSubresource
      * 
      * @Groups("article:read")
      */
